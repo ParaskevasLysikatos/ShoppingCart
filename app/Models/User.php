@@ -19,7 +19,9 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'password',
+       // 'password',
+        'phone',
+        'address'
     ];
 
     /**
@@ -27,17 +29,37 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    // protected $hidden = [
+    //     'password',
+    //     'remember_token',
+    // ];
 
     /**
      * The attributes that should be cast to native types.
      *
      * @var array
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    // protected $casts = [
+    //     'email_verified_at' => 'datetime',
+    // ];
+
+
+
+   /**
+     * Get the shopping carts for the user.
+     */
+    public function shopping_carts()
+    {
+        return $this->hasMany(ShoppingCart::class);
+    }
+
+
+   /**
+     * Get the discount codes for the user.
+     */
+    public function discount_codes()
+    {
+        return $this->hasMany(DiscountCode::class);
+    }
+
 }
