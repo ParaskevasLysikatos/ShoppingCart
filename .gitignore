@@ -16,3 +16,4 @@ npm-debug.log
 yarn-error.log
 .php-cs-fixer.php
 /.github
+php-cs-fixer.yml
