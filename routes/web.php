@@ -30,3 +30,5 @@ Route::post('/finalPayment', [App\Http\Controllers\HomeController::class, 'final
 Route::post('/checkout', [App\Http\Controllers\HomeController::class, 'checkout']);
 
 Route::post('/logout', [App\Http\Controllers\HomeController::class, 'logout']);
+
+Route::get('/history', [App\Http\Controllers\HomeController::class, 'history']);

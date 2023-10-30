@@ -32,7 +32,13 @@
 <ul>
     <li><a class="active" href="#home">Home</a></li>
     <li><a href="#discountCode">Discount codes</a></li>
-    <li><a href="#history">History of orders</a></li>
+
+
+    @if(Session::get('user'))
+        <li><a href="{{ url('history') }}">History of orders</a></li>
+    @endif
+
+
     @if(Session::get('user'))
     <form id="logout-form" method="post" action="{{ url('logout') }}">
         <li><a onclick="logout()" href="#logout">Logout</a></li>

@@ -144,4 +144,10 @@ class HomeController extends Controller
         $success="You have been logged out successfully.";
         return redirect('/')->with('success', $success);
     }
+
+    public function history()
+    {
+
+        return view('history');
+    }
 }
