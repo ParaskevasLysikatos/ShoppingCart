@@ -18,19 +18,22 @@ class DatabaseSeeder extends Seeder
         \App\Models\Product::create([
             'name'=>'mobile_phone',
             'image'=>'mobile-phone.jpg',
-            'stock_amount'=>5
+            'stock_amount'=>5,
+            'price'=>150.34
         ]);
 
         \App\Models\Product::create([
             'name'=>'laptop',
             'image'=>'laptop.jpg',
-            'stock_amount'=>2
+            'stock_amount'=>2,
+            'price'=>560.77
         ]);
 
         \App\Models\Product::create([
             'name'=>'tablet',
             'image'=>'tablet.jpg',
-            'stock_amount'=>0
+            'stock_amount'=>0,
+            'price'=>110.22
         ]);
     }
 }

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id()->index();
             $table->string('name')->unique();
             $table->string('image')->unique();
+            $table->float('price', 8, 2)->default(0);
             $table->integer('stock_amount')->default(0);
             $table->timestamps();
         });

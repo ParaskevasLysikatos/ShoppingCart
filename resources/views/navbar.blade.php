@@ -33,6 +33,12 @@
     <li><a class="active" href="#home">Home</a></li>
     <li><a href="#discountCode">Discount codes</a></li>
     <li><a href="#history">History of orders</a></li>
-    <li><a href="#logout">Logout</a></li>
+    @if(Session::get('user'))
+    <form id="logout-form" method="post" action="{{ url('logout') }}">
+        <li><a onclick="logout()" href="#logout">Logout</a></li>
+    </form>
+
+    @endif
+
   </ul>
 

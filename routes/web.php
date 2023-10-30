@@ -23,4 +23,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'welcome']);
 
-Route::post('/detailProductAmount', [App\Http\Controllers\HomeController::class, 'detailProductAmount'])->name('detailProductAmount');
+Route::post('/detailProductAmount', [App\Http\Controllers\HomeController::class, 'detailProductAmount']);
+
+Route::post('/finalPayment', [App\Http\Controllers\HomeController::class, 'finalPayment']);
+
+Route::post('/checkout', [App\Http\Controllers\HomeController::class, 'checkout']);
+
+Route::post('/logout', [App\Http\Controllers\HomeController::class, 'logout']);
