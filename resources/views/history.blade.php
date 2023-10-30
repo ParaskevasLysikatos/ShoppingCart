@@ -1,51 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Welcome to Shopping</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-</head>
+@include('layouts.head')
 
-<style>
-   .container {
-        margin: 0.5%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width: 60%;
-    }
-
-    td,
-    th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-    }
-
-    tr:nth-child(even) {
-        background-color: #dddddd;
-    }
-</style>
+@include('layouts.css')
 
 <body>
-    @include('navbar')
+    @include('layouts.navbar')
 
     <div class="container">
-        <h1>Welcome {{ Session::get('user') }} to history of checkouts</h1>
+        <h1>Welcome {{ Session::get('user') }} History & user details</h1>
 
     </div>
 
 
-    @include('success-error')
+    @include('layouts.success-error')
 
+
+    <h3 class="container">User information</h3>
+        <div class="container">
+            <table>
+                <tr>
+                    <th>User name</th>
+                    <th>User email</th>
+                    <th>User address</th>
+                    <th>User phone</th>
+                </tr>
+                    <tr>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td>{{ $user->address }}</td>
+                        <td>{{ $user->phone }}</td>
+
+                    </tr>
+            </table>
+        </div>
+
+
+        <h3 class="container">Shopping History</h3>
 
 
 </body>

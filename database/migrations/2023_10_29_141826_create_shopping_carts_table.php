@@ -19,11 +19,12 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
 
-            $table->unsignedBigInteger('discount_code_id');
+            $table->unsignedBigInteger('discount_code_id')->nullable();
             $table->foreign('discount_code_id')->references('id')->on('discount_codes');
 
 
             $table->float('final_payment', 8, 2)->default(0);
+            $table->float('payment', 8, 2)->default(0);
 
             $table->timestamps();
         });

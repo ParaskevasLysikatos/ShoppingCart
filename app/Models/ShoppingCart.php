@@ -12,6 +12,10 @@ class ShoppingCart extends Model
 
     protected $fillable = [
         'final_payment',
+        'payment',
+        'user_id',
+        'discount_code_id'
+
     ];
 
     /**

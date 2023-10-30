@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreign('shopping_cart_id')->references('id')->on('shopping_carts');
 
             $table->integer('amount')->default(0);
+            $table->float('total_cost', 8, 2)->default(0);
             $table->timestamps();
         });
     }

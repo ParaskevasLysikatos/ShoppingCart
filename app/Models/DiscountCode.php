@@ -12,7 +12,8 @@ class DiscountCode extends Model
     protected $fillable = [
         'discount_code',
         'amount',
-        'used'
+        'used',
+        'user_id'
     ];
 
 
