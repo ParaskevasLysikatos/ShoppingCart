@@ -30,12 +30,14 @@
 
 
 <ul>
-    <li><a class="active" href="#home">Home</a></li>
-    <li><a href="#discountCode">Discount codes</a></li>
-
+    <li><a class="{{ (request()->is('/')) ? 'active' : '' }}" href="{{ url('') }}">Home</a></li>
 
     @if(Session::get('user'))
-        <li><a href="{{ url('history') }}">History of orders</a></li>
+    <li><a class="{{ (request()->is('discount_codes')) ? 'active' : '' }}" href="{{ url('discount_codes') }}">My discount codes</a></li>
+    @endif
+
+    @if(Session::get('user'))
+        <li><a class="{{ (request()->is('history')) ? 'active' : '' }}" href="{{ url('history') }}">My history of orders</a></li>
     @endif
 
 
@@ -44,6 +46,14 @@
         <li><a onclick="logout()" href="#logout">Logout</a></li>
     </form>
 
+    @endif
+
+
+    @if(!Session::get('user'))
+    <form style="margin:0.5%; " id="login" method="post" action="{{ url('login') }}">
+        <li style="margin-left:5%;"><input style="width: 250px;" type="email" name='login_email' value="" placeholder="Your email"></li>
+        <li><button style="margin-left:5%;width: 150px;" type="submit">login</button></li>
+    </form>
     @endif
 
   </ul>

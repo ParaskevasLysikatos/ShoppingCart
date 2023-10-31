@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\DiscountJob;
 use App\Models\DiscountCode;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -106,9 +107,9 @@ class HomeController extends Controller
                 'f_payment' => 'required|numeric|gt:0',
                 'discount_code' => 'nullable|exists:discount_codes,discount_code'
             ]);
-            $user=User::where('email', $request->input('email'))->first();
+            $user = User::where('email', $request->input('email'))->first();
             session(['user' =>  $user->name]);
-
+            session(['email' =>  $user->email]);
         } else {
             $validated = $request->validate([
                 'name' => 'required|unique:users',
@@ -129,6 +130,7 @@ class HomeController extends Controller
 
             $success .= ' User with name: ' . $user->name . ' created successfully.@@';
             session(['user' =>  $user->name]);
+            session(['email' =>  $user->email]);
         }
 
         // check stock
@@ -145,7 +147,7 @@ class HomeController extends Controller
                                 'stock_amount' => $stock_amount - $value
                             ]);
                             $success .= ' Product ' . $pr->name . ' updated its stock successfully.@@';
-                            array_push($for_orders_array, ['product_id' => $pr->id, 'amount' => $value ,'total_cost' => $value * $pr->price]);
+                            array_push($for_orders_array, ['product_id' => $pr->id, 'amount' => $value, 'total_cost' => $value * $pr->price]);
                         } else {
                             $errors .= ' Product ' . $pr->name . ' not enough in stock.';
                         }
@@ -157,11 +159,16 @@ class HomeController extends Controller
         // has discount code
         $discount = 0;
         if ($request->input('discount_code')) {
-            $dis=DiscountCode::where('discount_code',$request->input('discount_code'))->first();
-            $discount_code_id = $dis->id;
-            $discount = $dis->amount;
-            $dis->update([ 'used' => true]);
-            $success .= ' You have used a discount code ' . $dis->discount_code . ' €.@@';
+            $dis = DiscountCode::where('discount_code', $request->input('discount_code'))->where('used', false)->where('user_id',$user->id)->first();
+            if ($dis) {
+                $discount_code_id = $dis->id;
+                $discount = $dis->amount;
+                $dis->update(['used' => true]);
+                $success .= ' You have used a discount code ' . $dis->discount_code . ' €.@@';
+            } else {
+                $errors .= ' Discount code ' . $request->input('discount_code') . ' is used or is not yours.';
+                $discount_code_id = null;
+            }
         } else {
             $discount_code_id = null;
         }
@@ -175,10 +182,10 @@ class HomeController extends Controller
             'final_payment' => $request->input('f_payment') - $discount,
         ]);
 
-        $success .= ' You have paid ' . $shopping_cart->final_payment . ' €.@@';
+
 
         // create orders
-       //dd($shopping_cart->id);
+        //dd($shopping_cart->id);
         foreach ($for_orders_array as  $for) {
             Order::Create([
                 'shopping_cart_id' => $shopping_cart->id,
@@ -187,18 +194,49 @@ class HomeController extends Controller
                 'total_cost' => $for['total_cost']
             ]);
         }
+        $success .= ' ' . count($for_orders_array) . ' number of Order were created.@@';
 
         // create a discount code
+        if($discount==0){ // no discount code for this shopping cart used, so give one
+            // $disc_create=DiscountCode::create([
+            //     'user_id' => $user->id,
+            //     'discount_code' => $this->generateRandomString(),
+            //     'amount'=> 5
+            // ]);
+           // $success .= ' A discount code: ' . $disc_create->discount_code . ' to use was created.@@';
+           //dd($user);
+         //  DiscountJob::dispatch($user->id)->delay(now()->addSeconds(5));
+           DiscountJob::dispatch($user->id)->delay(now()->addMinutes(15));
 
+            $success .= ' A discount code job was dispatched.@@';
+        }
+
+        $success .= ' You have paid ' . $shopping_cart->final_payment . ' €.';
         return redirect('/')->with('success', $success)->withErrors($errors);
     }
 
-    function logout(Request $request)
+   public function logout()
     {
         Session::flush();
         $success = "You have been logged out successfully.";
         return redirect('/')->with('success', $success);
     }
 
-  
+//    public function generateRandomString($length = 6) {
+//         return substr(str_shuffle(str_repeat($x='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
+//     }
+
+    public function login(Request $request)
+    {
+
+        $validated = $request->validate([
+            'login_email' => 'required|exists:users,email',
+        ]);
+        $user = User::where('email', $request->input('login_email'))->first();
+        session(['user' =>  $user->name]);
+        session(['email' =>  $user->email]);
+
+        $success = "You have been logged in successfully.";
+        return redirect('/')->with('success', $success);
+    }
 }

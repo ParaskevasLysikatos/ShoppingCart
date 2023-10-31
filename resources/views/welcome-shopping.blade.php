@@ -9,13 +9,13 @@
     @include('layouts.navbar')
 
     <div class="container">
-        <h1>Welcome to our store (supports 3 products)</h1>
+        <h1>Welcome {{ (session('user')) }} to our store (supports 3 products)</h1>
 
     </div>
 
     @include('layouts.success-error')
 
-    <h3 class="container">List of Products</h3>
+    <h3 class="container">List of Products </h3>
     <form id="checkout-form" method="post" action="{{ url('checkout') }}">
         @csrf
         <div class="container">
@@ -64,7 +64,7 @@
                     <h3>User Details</h3>
                     <br>
                     <input onchange="alreadyUser()" type="checkbox" id="user_exists" name="user_exists" value="1">
-                    <label for="user_exists"> Already a user?</label>
+                    <label for="user_exists"> Already a user?(email only){{ '( your email: '.session('email').' )'}}</label>
                     <div id="user_info">
                         <br>
                         <label for="name"><i class="fa fa-user"></i>Name:</label>

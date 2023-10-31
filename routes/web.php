@@ -31,4 +31,8 @@ Route::post('/checkout', [App\Http\Controllers\HomeController::class, 'checkout'
 
 Route::post('/logout', [App\Http\Controllers\HomeController::class, 'logout']);
 
+Route::post('/login', [App\Http\Controllers\HomeController::class, 'login']);
+
 Route::get('/history', [App\Http\Controllers\HistoryController::class, 'history']);
+
+Route::get('/discount_codes', [App\Http\Controllers\HistoryController::class, 'discount_codes']);
