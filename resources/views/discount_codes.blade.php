@@ -49,7 +49,7 @@
 
 </body>
 
-<Script></Script>
+@include('scripts')
 
 
 </html>
