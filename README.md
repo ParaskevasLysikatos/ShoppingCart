@@ -16,8 +16,8 @@ Our users should be able to add products that are in stock to their shopping car
 Fifteen minutes after checkout, a user should receive a discount code of € 5,- for future purchases. If a user chooses to use a discount code, you should keep track of what discount code was applied and what amount was subtracted from the checkout.
 
 # I provided a UI because I was not used to work with e-commerce
-Firstly you need to make a checkout to be registed
-Then use Already a user and make more checkouts
-Visit from the navbar as a registered user your discount codes and your checkout history
-You can change user from logout or make with different data on user details
-Login if do not want to make another checkout
+- `Firstly you need to make a checkout to be registed`
+- `Then use Already a user and make more checkouts`
+- `Visit from the navbar as a registered user your discount codes and your checkout history`
+- `You can change user from logout or make with different data on user details`
+- `Login if do not want to make another checkout`
