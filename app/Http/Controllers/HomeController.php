@@ -175,11 +175,16 @@ class HomeController extends Controller
 
 
         // create the Shopping cart
+        $final_payment=0;
+        foreach ($for_orders_array as  $for) {
+                $final_payment+=$for['total_cost'];
+        }
+
         $shopping_cart = ShoppingCart::create([
             'user_id' => $user->id,
             'discount_code_id' => $discount_code_id,
-            'payment' => $request->input('f_payment'),
-            'final_payment' => $request->input('f_payment') - $discount,
+            'payment' => $final_payment,
+            'final_payment' => $final_payment - $discount,
         ]);
 
 
